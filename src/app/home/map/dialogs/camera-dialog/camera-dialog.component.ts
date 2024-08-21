@@ -16,7 +16,6 @@ export class CameraDialogComponent implements OnInit {
   data = inject(MAT_DIALOG_DATA);
   seconds = 30;
 
-  constructor() {}
   ngOnInit(): void {
     setInterval(() => {
       this.seconds = this.seconds - 1;

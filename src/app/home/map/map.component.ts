@@ -11,7 +11,7 @@ import {
   icon,
 } from 'leaflet';
 import { LeafletModule } from '@bluehalo/ngx-leaflet';
-import { LeafletPanelLayersComponent, OptionSelectedEvent } from './controls';
+import { LeafletPanelLayersComponent } from './controls';
 import { AllData } from '@models/interfaces';
 import { Feature, Geometry, Point } from 'geojson';
 import { MapService } from '@services/map.service';
@@ -85,7 +85,7 @@ export class MapComponent implements OnInit {
   onEachFeature(feature: Feature<Geometry, any>, layer: Layer): void {
     layer.on({
       click: (e) => {
-        const dialogRef = this.dialog.open(CameraDialogComponent, {          
+        const dialogRef = this.dialog.open(CameraDialogComponent, {
           data: feature.properties,
         });
         dialogRef.afterOpened().subscribe((_) => {
@@ -157,6 +157,39 @@ export class MapComponent implements OnInit {
               });
             },
             onEachFeature: this.onEachFeature.bind(this),
+          }
+        ),
+      },
+      speedReducers: {
+        show: false,
+        layer: geoJSON(
+          {
+            type: 'FeatureCollection',
+            features: this.allData.speedReducers.map((element) => {
+              return {
+                type: 'Feature',
+                geometry: {
+                  type: 'Point',
+                  coordinates: element.geom.coordinates,
+                },
+                properties: {
+                  location: element.location,
+                },
+              };
+            }),
+          } as any,
+          {
+            pointToLayer(_: Feature<Point, any>, latlng: LatLng) {
+              return marker(latlng, {
+                icon: icon({
+                  iconSize: [23, 23],
+                  iconUrl: '/assets/images/bump.svg',
+                }),
+              });
+            },
+            onEachFeature(feature, layer) {
+              layer.bindPopup(feature.properties.location);
+            },
           }
         ),
       },
@@ -321,43 +354,6 @@ export class MapComponent implements OnInit {
           };
         }),
       },
-      speedReducersGroups: {
-        children: this.allData.speedReducersGroups.map((group) => {
-          return {
-            show: false,
-            layer: geoJSON(
-              {
-                type: 'FeatureCollection',
-                features: group.speedReducers.map((element) => {
-                  return {
-                    type: 'Feature',
-                    geometry: {
-                      type: 'Point',
-                      coordinates: element.geom.coordinates,
-                    },
-                    properties: {
-                      location: element.location,
-                    },
-                  };
-                }),
-              } as any,
-              {
-                pointToLayer(_: Feature<Point, any>, latlng: LatLng) {
-                  return marker(latlng, {
-                    icon: icon({
-                      iconSize: [23, 23],
-                      iconUrl: '/assets/images/bump.svg',
-                    }),
-                  });
-                },
-                onEachFeature(feature, layer) {
-                  layer.bindPopup(feature.properties.location);
-                },
-              }
-            ),
-          };
-        }),
-      },
     };
     this.mapService.onUpdate().subscribe({
       next: (response) => {
@@ -420,12 +416,6 @@ export class MapComponent implements OnInit {
         );
       },
     });
-  }
-
-  optionSelected(event: OptionSelectedEvent) {
-    if (event.option === 'educationCentersGroups') {
-    }
-    this.optionsMap[event.option!].show = event.show;
   }
 
   styleMap() {

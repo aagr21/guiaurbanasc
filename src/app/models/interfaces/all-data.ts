@@ -5,7 +5,7 @@ import {
   EducationCenterGroup,
   LineName,
   Parking,
-  SpeedReducerGroup,
+  SpeedReducer,
   TrafficLightGroup,
 } from '@models/interfaces';
 
@@ -14,7 +14,7 @@ export interface AllData {
   cityCameras: CityCamera[];
   linesNames: LineName[];
   channelsRoutes: ChannelRoute[];
-  speedReducersGroups: SpeedReducerGroup[];
+  speedReducers: SpeedReducer[];
   trafficLightsGroups: TrafficLightGroup[];
   educationCentersGroups: EducationCenterGroup[];
   parkings: Parking[];

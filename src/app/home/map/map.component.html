@@ -15,8 +15,12 @@
       } 
       @if(optionsMap['parkings'].show) {
         <div [leafletLayer]="optionsMap['parkings'].layer!"></div>
-      } @if(optionsMap['channelsRoutes'].show) {
+      }
+      @if(optionsMap['channelsRoutes'].show) {
         <div [leafletLayer]="optionsMap['channelsRoutes'].layer!"></div>
+      } 
+      @if(optionsMap['speedReducers'].show) {
+        <div [leafletLayer]="optionsMap['speedReducers'].layer!"></div>
       } 
       @for(child of optionsMap['educationCentersGroups'].children!; track child) {
         @if (child.show) {
@@ -24,11 +28,6 @@
         }
       }
       @for(child of optionsMap['trafficLightsGroups'].children!; track child) {
-        @if (child.show) {
-          <div [leafletLayer]="child.layer!"></div>
-        }
-      }
-      @for(child of optionsMap['speedReducersGroups'].children!; track child) {
         @if (child.show) {
           <div [leafletLayer]="child.layer!"></div>
         }

@@ -12,6 +12,10 @@
     <label class="ml-1 unselectable">Parqueos</label>
   </div>
   <div class="m-0 h-[22px]">
+    <input type="checkbox" (click)="selectOption('speedReducers', $event)" />
+    <label class="ml-1 unselectable">Reductores</label>
+  </div>
+  <div class="m-0 h-[22px]">
     <input type="checkbox" (click)="selectOption('channelsRoutes', $event)" />
     <label class="ml-1 unselectable">Canales de Transporte</label>
   </div>
@@ -86,43 +90,6 @@
       />
       <label for="traffic-{{ group.id }}" class="ml-1 unselectable">{{
         group.type
-      }}</label>
-    </div>
-    }
-  </div>
-  <div class="collapsible-container">
-    <div class="cursor-pointer m-0 h-[22px]">
-      <input
-        type="checkbox"
-        [checked]="groupsMap['speedReducersGroups']"
-        (click)="selectOption('speedReducersGroups', $event, true)"
-      />
-      <label class="cursor-pointer" (click)="toggleCollapse(2)"
-        ><span class="unselectable">
-          {{ this.expandedIndices.has(2) ? "-" : "+" }} Reductores</span
-        ></label
-      >
-    </div>
-    @for(group of allData.speedReducersGroups; track group; let i = $index) {
-    <div
-      class="collapsible-content {{ isExpanded(2) ? '' : 'hidden' }}"
-      [class.expanded]="isExpanded(2)"
-    >
-      <input
-        id="{{ group.id }}"
-        (click)="
-          selectOption(
-            'speedReducersGroups',
-            $event,
-            false,
-            optionsMap['speedReducersGroups'].children![i]
-          )
-        "
-        type="checkbox"
-        [checked]="optionsMap['speedReducersGroups'].children![i].show"
-      />
-      <label for="{{ group.id }}" class="ml-1 unselectable">{{
-        group.year
       }}</label>
     </div>
     }
