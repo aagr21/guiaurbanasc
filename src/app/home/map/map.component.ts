@@ -91,7 +91,7 @@ export class MapComponent implements OnInit {
         dialogRef.afterOpened().subscribe((_) => {
           setTimeout(() => {
             dialogRef.close();
-          }, 10000);
+          }, 30000);
         });
       },
     });

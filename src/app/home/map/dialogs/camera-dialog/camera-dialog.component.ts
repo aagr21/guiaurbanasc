@@ -14,7 +14,7 @@ import {
 })
 export class CameraDialogComponent implements OnInit {
   data = inject(MAT_DIALOG_DATA);
-  seconds = 10;
+  seconds = 30;
 
   constructor() {}
   ngOnInit(): void {
