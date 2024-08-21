@@ -85,7 +85,7 @@ export class MapComponent implements OnInit {
   onEachFeature(feature: Feature<Geometry, any>, layer: Layer): void {
     layer.on({
       click: (e) => {
-        const dialogRef = this.dialog.open(CameraDialogComponent, {
+        const dialogRef = this.dialog.open(CameraDialogComponent, {          
           data: feature.properties,
         });
         dialogRef.afterOpened().subscribe((_) => {

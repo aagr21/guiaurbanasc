@@ -8,6 +8,8 @@
     La ventana se cerrará en: {{ seconds }} segundos
   </div>
   <div class="mt-3 px-3 py-1">
-    <video src="{{ data.urlVideo }}" autoplay controls="true"></video>
+    <div class="rounded-xl overflow-hidden">
+      <video src="{{ data.urlVideo }}" autoplay controls="true"></video>
+    </div>
   </div>
 </mat-dialog-content>
