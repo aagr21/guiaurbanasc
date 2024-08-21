@@ -1,0 +1,13 @@
+<mat-dialog-content>
+  <div class="mt-5 flex justify-center items-center text-xs">
+    EN VIVO &nbsp;<object type="image/svg+xml" data="/assets/images/live.svg">
+      Your browser does not support SVG</object
+    >&nbsp; - {{ data.location }}
+  </div>
+  <div class="text-center text-xs">
+    La ventana se cerrará en: {{ seconds }} segundos
+  </div>
+  <div class="mt-3 px-3 py-1">
+    <video src="{{ data.urlVideo }}" autoplay controls="true"></video>
+  </div>
+</mat-dialog-content>

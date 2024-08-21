@@ -1,0 +1,33 @@
+.panel {
+  background-color: white;
+  border-color: rgb(135, 135, 135);
+  border-width: 1.3px;
+  font-size: small;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  border-radius: 11px;
+}
+
+.collapsible-container {
+  max-width: 300px;
+}
+
+.collapsible-trigger {
+  cursor: pointer;
+}
+
+.collapsible-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.01s ease-out;
+  margin: 0;
+  margin-left: 15px;
+  // background-color: #f1f1f1;
+}
+
+.collapsible-content.expanded {
+  max-height: 22px; /* Ajusta esto según el tamaño del contenido */
+}
+
+.unselectable {
+  user-select: none;
+}

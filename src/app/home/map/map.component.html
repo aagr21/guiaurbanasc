@@ -1,0 +1,45 @@
+<div class="content">
+  <div class="h-full w-full z-[0] absolute">
+    <div
+      leaflet
+      [leafletOptions]="options"
+      [leafletBaseLayers]="baseLayers"
+      [style]="styleMap()"
+      (leafletMapReady)="onMapReady($event)"
+    >
+      @if(optionsMap['busStops'].show) {
+        <div [leafletLayer]="optionsMap['busStops'].layer!"></div>
+      } 
+      @if(optionsMap['cityCameras'].show) {
+        <div [leafletLayer]="optionsMap['cityCameras'].layer!"></div>
+      } 
+      @if(optionsMap['parkings'].show) {
+        <div [leafletLayer]="optionsMap['parkings'].layer!"></div>
+      } @if(optionsMap['channelsRoutes'].show) {
+        <div [leafletLayer]="optionsMap['channelsRoutes'].layer!"></div>
+      } 
+      @for(child of optionsMap['educationCentersGroups'].children!; track child) {
+        @if (child.show) {
+          <div [leafletLayer]="child.layer!"></div>
+        }
+      }
+      @for(child of optionsMap['trafficLightsGroups'].children!; track child) {
+        @if (child.show) {
+          <div [leafletLayer]="child.layer!"></div>
+        }
+      }
+      @for(child of optionsMap['speedReducersGroups'].children!; track child) {
+        @if (child.show) {
+          <div [leafletLayer]="child.layer!"></div>
+        }
+      }
+    </div>
+  </div>
+
+  <div class="float-end z-[1] relative m-2">
+    <leaflet-panel-layers
+      [allData]="allData"
+      [(optionsMap)]="optionsMap"
+    />
+  </div>
+</div>
