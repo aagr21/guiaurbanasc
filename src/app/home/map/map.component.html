@@ -1,44 +1,70 @@
-<div class="content">
-  <div class="h-full w-full z-[0] absolute">
-    <div
-      leaflet
-      [leafletOptions]="options"
-      [leafletBaseLayers]="baseLayers"
-      [style]="styleMap()"
-      (leafletMapReady)="onMapReady($event)"
-    >
-      @if(optionsMap['busStops'].show) {
-        <div [leafletLayer]="optionsMap['busStops'].layer!"></div>
-      } 
-      @if(optionsMap['cityCameras'].show) {
-        <div [leafletLayer]="optionsMap['cityCameras'].layer!"></div>
-      } 
-      @if(optionsMap['parkings'].show) {
-        <div [leafletLayer]="optionsMap['parkings'].layer!"></div>
-      }
-      @if(optionsMap['channelsRoutes'].show) {
-        <div [leafletLayer]="optionsMap['channelsRoutes'].layer!"></div>
-      } 
-      @if(optionsMap['speedReducers'].show) {
-        <div [leafletLayer]="optionsMap['speedReducers'].layer!"></div>
-      } 
-      @for(child of optionsMap['educationCentersGroups'].children!; track child) {
-        @if (child.show) {
+<mat-drawer-container class="drawer-container" autosize>
+  <mat-drawer
+    #drawer
+    class="drawer"
+    mode="over"
+    [autoFocus]="true"
+    [opened]="showBusesOption"
+  >
+    <app-sidebar [linesNames]="allData.linesNames" />
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="content">
+      <div class="h-full w-full z-[0] absolute">
+        <div
+          leaflet
+          [leafletOptions]="options"
+          [leafletBaseLayers]="baseLayers"
+          [style]="styleMap()"
+          (leafletMapReady)="onMapReady($event)"
+        >
+          @if(optionsMap['busStops'].show) {
+          <div [leafletLayer]="optionsMap['busStops'].layer!"></div>
+          } @if(optionsMap['cityCameras'].show) {
+          <div [leafletLayer]="optionsMap['cityCameras'].layer!"></div>
+          } @if(optionsMap['parkings'].show) {
+          <div [leafletLayer]="optionsMap['parkings'].layer!"></div>
+          } @if(optionsMap['channelsRoutes'].show) {
+          <div [leafletLayer]="optionsMap['channelsRoutes'].layer!"></div>
+          } @if(optionsMap['speedReducers'].show) {
+          <div [leafletLayer]="optionsMap['speedReducers'].layer!"></div>
+          } @for(child of optionsMap['educationCentersGroups'].children!; track
+          child) { @if (child.show) {
           <div [leafletLayer]="child.layer!"></div>
-        }
-      }
-      @for(child of optionsMap['trafficLightsGroups'].children!; track child) {
-        @if (child.show) {
+          } } @for(child of optionsMap['trafficLightsGroups'].children!; track
+          child) { @if (child.show) {
           <div [leafletLayer]="child.layer!"></div>
-        }
-      }
-    </div>
-  </div>
+          } }
+        </div>
+      </div>
 
-  <div class="float-end z-[1] relative m-2">
-    <leaflet-panel-layers
-      [allData]="allData"
-      [(optionsMap)]="optionsMap"
-    />
-  </div>
-</div>
+      <div class="float-end z-[1] relative m-2">
+        <leaflet-panel-layers
+          [allData]="allData"
+          [(optionsMap)]="optionsMap"
+          [(showBusesOption)]="showBusesOption"
+        />
+      </div>
+
+      <div class="flex items-center justify-center h-full z-[2] absolute">
+        <button
+          class="{{ showBusesOption ? 'bg-white vertical-button' : 'hidden' }}"
+          (click)="drawer.toggle()"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-caret-right-fill"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

@@ -1,23 +1,27 @@
 <div class="panel p-2">
   <div class="m-0 h-[22px]">
-    <input type="checkbox" (click)="selectOption('busStops', $event)" />
-    <label class="ml-1 unselectable">Paradas de Micros</label>
+    <input id="busStops" type="checkbox" (click)="selectOption('busStops', $event)" />
+    <label for="busStops" class="ml-1 unselectable">Paradas de Micros</label>
   </div>
   <div class="m-0 h-[22px]">
-    <input type="checkbox" (click)="selectOption('cityCameras', $event)" />
-    <label class="ml-1 unselectable">Cámaras</label>
+    <input id="buses" type="checkbox" (click)="selectBus($event)" />
+    <label for="buses" class="ml-1 unselectable">Micros</label>
   </div>
   <div class="m-0 h-[22px]">
-    <input type="checkbox" (click)="selectOption('parkings', $event)" />
-    <label class="ml-1 unselectable">Parqueos</label>
+    <input id="cityCameras" type="checkbox" (click)="selectOption('cityCameras', $event)" />
+    <label for="cityCameras" class="ml-1 unselectable">Cámaras</label>
   </div>
   <div class="m-0 h-[22px]">
-    <input type="checkbox" (click)="selectOption('speedReducers', $event)" />
-    <label class="ml-1 unselectable">Reductores</label>
+    <input id="parkings" type="checkbox" (click)="selectOption('parkings', $event)" />
+    <label for="parkings" class="ml-1 unselectable">Parqueos</label>
   </div>
   <div class="m-0 h-[22px]">
-    <input type="checkbox" (click)="selectOption('channelsRoutes', $event)" />
-    <label class="ml-1 unselectable">Canales de Transporte</label>
+    <input id="speedReducers" type="checkbox" (click)="selectOption('speedReducers', $event)" />
+    <label for="speedReducers" class="ml-1 unselectable">Reductores</label>
+  </div>
+  <div class="m-0 h-[22px]">
+    <input id="channelsRoutes" type="checkbox" (click)="selectOption('channelsRoutes', $event)" />
+    <label for="channelsRoutes" class="ml-1 unselectable">Canales de Transporte</label>
   </div>
 
   <div class="collapsible-container">

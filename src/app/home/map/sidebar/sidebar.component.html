@@ -1,0 +1,70 @@
+<mat-tab-group class="h-full overflow-y-hidden">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon fontSet="material-symbols-outlined">directions_bus</mat-icon>
+    </ng-template>
+    <div class="h-full overflow-y-hidden">
+      <div class="mt-3 mb-1">
+        <span class="text-center font-medium flex justify-center">
+          Micros <span class="material-symbols-outlined">directions_bus</span>
+        </span>
+      </div>
+      <div class="h-full overflow-y-auto">
+        @if (linesNames.length > 0) {
+        <div class="grid grid-cols-2 gap-2 mb-20 ml-4 mr-2">
+          @for (lineName of linesNames; track lineName.id) {
+          <mat-card>
+            <div class="mt-3">
+              <p
+                class="text-center {{
+                  isSmallScreen ? 'text-[10px]' : 'text-[14px]'
+                }} font-medium"
+              >
+                {{ lineName.name | titlecase }}
+              </p>
+            </div>
+            <div class="image-container">
+              <img
+                [src]="lineName.imageUrl!"
+                alt="Micro {{ lineName.name }}"
+                class="text-center logo-micro"
+              />
+            </div>
+            <div class="{{ !isSmallScreen ? 'buttons-lg' : 'buttons-sm' }}">
+              <button
+                mat-raised-button
+                class="mr-1 {{
+                  !isSmallScreen ? 'button-lg' : 'button-sm'
+                }} button-go"
+              >
+                Ida
+              </button>
+              <button
+                mat-raised-button
+                class="ml-1 {{
+                  !isSmallScreen ? 'button-lg' : 'button-sm'
+                }} button-return"
+              >
+                Vuelta
+              </button>
+            </div>
+          </mat-card>
+          }
+        </div>
+        }
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon fontSet="material-symbols-outlined">radar</mat-icon>
+    </ng-template>
+    <div class="h-full overflow-y-hidden">
+      <div class="mt-3 mb-1">
+        <span class="text-center font-medium flex justify-center">
+          Micros cerca <span class="material-symbols-outlined">radar</span>
+        </span>
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>

@@ -17,6 +17,8 @@ import { Feature, Geometry, Point } from 'geojson';
 import { MapService } from '@services/map.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CameraDialogComponent } from './dialogs/camera-dialog/camera-dialog.component';
+import { MatSidenavModule } from "@angular/material/sidenav";
+import { SidebarComponent } from "./sidebar/sidebar.component";
 
 export interface Option {
   show?: boolean;
@@ -27,7 +29,7 @@ export interface Option {
 @Component({
   selector: 'app-map',
   standalone: true,
-  imports: [LeafletModule, LeafletPanelLayersComponent],
+  imports: [LeafletModule, LeafletPanelLayersComponent, MatSidenavModule, SidebarComponent],
   templateUrl: './map.component.html',
   styleUrl: './map.component.scss',
 })
@@ -417,6 +419,8 @@ export class MapComponent implements OnInit {
       },
     });
   }
+
+  showBusesOption = false;
 
   styleMap() {
     return 'height: 100%; width: 100%';

@@ -17,6 +17,9 @@ export interface OptionSelectedEvent {
 })
 export class LeafletPanelLayersComponent {
   @Input() allData!: AllData;
+  @Input() showBusesOption!: boolean;
+  @Output() showBusesOptionChange: EventEmitter<boolean> =
+    new EventEmitter<boolean>();
   @Input() optionsMap!: {
     [k: string]: Option;
   };
@@ -59,6 +62,12 @@ export class LeafletPanelLayersComponent {
         this.groupsMap[option] = show;
       }
     }
+  }
+
+  selectBus(event: any) {
+    const show = event.target.checked;
+    this.showBusesOption = show;
+    this.showBusesOptionChange.emit(this.showBusesOption);
   }
 
   expandedIndices: Set<number> = new Set();
