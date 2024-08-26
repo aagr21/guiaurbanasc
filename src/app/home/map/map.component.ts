@@ -433,8 +433,9 @@ export class MapComponent implements OnInit {
   onLineRouteSelected(lineRoute: LineRoute) {
     this.lineRouteSelected = lineRoute;
     this.drawer.close();
-    this.map.setZoom(13);
-    this.map.setView(latLng(-17.779223, -63.18164));
+    this.map.setView(latLng(-17.779223, -63.18164), 13, {
+      animate: true,
+    });
   }
 
   getLineRouteSelectedLayer(lineRoute: LineRoute): Layer {
