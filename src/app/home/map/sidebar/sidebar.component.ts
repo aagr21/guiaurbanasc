@@ -1,36 +1,24 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
-import { MatCardModule } from '@angular/material/card';
-import { TitleCasePipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
-import { LineName } from '@models/interfaces';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { MatButton } from '@angular/material/button';
-import { Subscription } from 'rxjs';
+import { LineName, LineRoute } from '@models/interfaces';
+import { LinesComponent } from './lines/lines.component';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [MatTabsModule, MatIcon, MatButton, MatCardModule, TitleCasePipe],
+  imports: [MatTabsModule, MatIcon, LinesComponent],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
 })
-export class SidebarComponent implements OnDestroy {
+export class SidebarComponent {
   @Input() linesNames!: LineName[];
-  isSmallScreen = false;
-  private subscription!: Subscription;
+  @Input() lineRouteSelected!: LineRoute;
+  @Output() lineRouteSelectedChange: EventEmitter<LineRoute> =
+    new EventEmitter<LineRoute>();
 
-  constructor(breakpointObserver: BreakpointObserver) {
-    this.subscription = breakpointObserver
-      .observe([Breakpoints.HandsetPortrait])
-      .subscribe({
-        next: (result) => {
-          this.isSmallScreen = result.matches;
-        },
-      });
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
+  onLineRouteSelected(lineRoute: LineRoute) {
+    this.lineRouteSelected = lineRoute;
+    this.lineRouteSelectedChange.emit(this.lineRouteSelected);
+  }  
 }

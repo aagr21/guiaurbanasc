@@ -6,7 +6,11 @@
     [autoFocus]="true"
     [opened]="showBusesOption"
   >
-    <app-sidebar [linesNames]="allData.linesNames" />
+    <app-sidebar
+      [linesNames]="allData.linesNames"
+      [lineRouteSelected]="lineRouteSelected"
+      (lineRouteSelectedChange)="onLineRouteSelected($event)"
+    />
   </mat-drawer>
   <mat-drawer-content>
     <div class="content">
@@ -18,7 +22,11 @@
           [style]="styleMap()"
           (leafletMapReady)="onMapReady($event)"
         >
-          @if(optionsMap['busStops'].show) {
+          @if (lineRouteSelected && showBusesOption) {
+          <div
+            [leafletLayer]="getLineRouteSelectedLayer(lineRouteSelected)"
+          ></div>
+          } @if(optionsMap['busStops'].show) {
           <div [leafletLayer]="optionsMap['busStops'].layer!"></div>
           } @if(optionsMap['cityCameras'].show) {
           <div [leafletLayer]="optionsMap['cityCameras'].layer!"></div>
@@ -51,18 +59,7 @@
           class="{{ showBusesOption ? 'bg-white vertical-button' : 'hidden' }}"
           (click)="drawer.toggle()"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="bi bi-caret-right-fill"
-            viewBox="0 0 16 16"
-          >
-            <path
-              d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"
-            />
-          </svg>
+          <span class="material-symbols-outlined">directions_bus</span>
         </button>
       </div>
     </div>

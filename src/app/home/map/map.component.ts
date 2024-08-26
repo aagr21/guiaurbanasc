@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit, ViewChild } from '@angular/core';
 import {
   geoJSON,
   latLng,
@@ -9,16 +9,17 @@ import {
   LatLng,
   marker,
   icon,
+  polyline,
 } from 'leaflet';
 import { LeafletModule } from '@bluehalo/ngx-leaflet';
 import { LeafletPanelLayersComponent } from './controls';
-import { AllData } from '@models/interfaces';
+import { AllData, LineRoute } from '@models/interfaces';
 import { Feature, Geometry, Point } from 'geojson';
 import { MapService } from '@services/map.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CameraDialogComponent } from './dialogs/camera-dialog/camera-dialog.component';
-import { MatSidenavModule } from "@angular/material/sidenav";
-import { SidebarComponent } from "./sidebar/sidebar.component";
+import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 export interface Option {
   show?: boolean;
@@ -29,13 +30,19 @@ export interface Option {
 @Component({
   selector: 'app-map',
   standalone: true,
-  imports: [LeafletModule, LeafletPanelLayersComponent, MatSidenavModule, SidebarComponent],
+  imports: [
+    LeafletModule,
+    LeafletPanelLayersComponent,
+    MatSidenavModule,
+    SidebarComponent,
+  ],
   templateUrl: './map.component.html',
   styleUrl: './map.component.scss',
 })
 export class MapComponent implements OnInit {
   map!: Map;
   @Input() allData!: AllData;
+  lineRouteSelected!: LineRoute;
 
   googleMapsLayer = tileLayer(
     'https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
@@ -83,6 +90,7 @@ export class MapComponent implements OnInit {
     'EDUCACIÓN COMPLEMENTARIA': 'EDUCACIÓN COMPLEMENTARIA',
   };
   dialog = inject(MatDialog);
+  @ViewChild('drawer') drawer!: MatDrawer;
 
   onEachFeature(feature: Feature<Geometry, any>, layer: Layer): void {
     layer.on({
@@ -218,7 +226,7 @@ export class MapComponent implements OnInit {
             pointToLayer(feature: Feature<Point, any>, latlng: LatLng) {
               return marker(latlng, {
                 icon: icon({
-                  iconSize: [18, 18],
+                  iconSize: [40, 40],
                   iconUrl: `/assets/images/${
                     feature.properties.isFree ? 'parking-free' : 'parking-full'
                   }.svg`,
@@ -381,7 +389,7 @@ export class MapComponent implements OnInit {
             pointToLayer(feature: Feature<Point, any>, latlng: LatLng) {
               return marker(latlng, {
                 icon: icon({
-                  iconSize: [18, 18],
+                  iconSize: [40, 40],
                   iconUrl: `/assets/images/${
                     feature.properties.isFree ? 'parking-free' : 'parking-full'
                   }.svg`,
@@ -421,6 +429,23 @@ export class MapComponent implements OnInit {
   }
 
   showBusesOption = false;
+
+  onLineRouteSelected(lineRoute: LineRoute) {
+    this.lineRouteSelected = lineRoute;
+    this.drawer.close();
+  }
+
+  getLineRouteSelectedLayer(lineRoute: LineRoute): Layer {
+    return polyline(
+      lineRoute.geom.coordinates.map((coordinates) => {
+        return latLng(coordinates[1], coordinates[0]);
+      }),
+      {
+        color: '#EE675C',
+        weight: 5,
+      }
+    );
+  }
 
   styleMap() {
     return 'height: 100%; width: 100%';

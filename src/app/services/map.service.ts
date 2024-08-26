@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { AllData, Parking } from '@models/interfaces';
+import { AllData, LineRoute, Parking } from '@models/interfaces';
 import { Observable } from 'rxjs';
 import { Socket } from 'ngx-socket-io';
-import { environment } from "@environments/environment.prod";
+import { environment } from '@environments/environment.prod';
+import { FindLineRoute } from '@models/interfaces/find-line-route';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ import { environment } from "@environments/environment.prod";
 export class MapService extends Socket {
   constructor() {
     super({
-      url: `${ environment.apiBaseUrl }/parkings`,
+      url: `${environment.apiBaseUrl}/parkings`,
     });
     this.onUpdate();
   }
@@ -23,6 +24,13 @@ export class MapService extends Socket {
   }
 
   getAll(): Observable<AllData> {
-    return this.http.get<AllData>(`${ environment.apiBaseUrl }/api/root`);
+    return this.http.get<AllData>(`${environment.apiBaseUrl}/api/root`);
+  }
+
+  findLineRoute(findLineRoute: FindLineRoute): Observable<LineRoute> {
+    return this.http.post<LineRoute>(
+      `${environment.apiBaseUrl}/api/lines-routes/find-line-route`,
+      findLineRoute
+    );
   }
 }
