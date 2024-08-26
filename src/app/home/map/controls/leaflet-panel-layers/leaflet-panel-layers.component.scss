@@ -15,6 +15,19 @@
   cursor: pointer;
 }
 
+.root-collapsible-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.01s ease-out;
+  margin: 0;
+  margin-left: 6px;
+  // background-color: #f1f1f1;
+}
+
+.root-collapsible-content.expanded {
+  max-height: 100%; /* Ajusta esto según el tamaño del contenido */
+}
+
 .collapsible-content {
   max-height: 0;
   overflow: hidden;
@@ -25,7 +38,7 @@
 }
 
 .collapsible-content.expanded {
-  max-height: 22px; /* Ajusta esto según el tamaño del contenido */
+  max-height: 100%; /* Ajusta esto según el tamaño del contenido */
 }
 
 .unselectable {

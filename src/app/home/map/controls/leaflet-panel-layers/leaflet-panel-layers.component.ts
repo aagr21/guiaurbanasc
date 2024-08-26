@@ -33,7 +33,6 @@ export class LeafletPanelLayersComponent {
   } = {
     educationCentersGroups: false,
     trafficLightsGroups: false,
-    speedReducersGroups: false,
   };
 
   selectOption(option: string, event: any, allGroup?: boolean, child?: Option) {
@@ -62,6 +61,10 @@ export class LeafletPanelLayersComponent {
         this.groupsMap[option] = show;
       }
     }
+  }
+
+  constructor(){
+    this.expandedIndices.add(0);
   }
 
   selectBus(event: any) {
