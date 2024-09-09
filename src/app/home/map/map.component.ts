@@ -21,6 +21,11 @@ import { CameraDialogComponent } from './dialogs/camera-dialog/camera-dialog.com
 import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { SidebarComponent } from './sidebar/sidebar.component';
 
+export interface BusStop {
+  stopLat: number;
+  stopLon: number;
+}
+
 export interface Option {
   show?: boolean;
   layer?: Layer;
@@ -426,6 +431,9 @@ export class MapComponent implements OnInit {
         );
       },
     });
+    const busStop: BusStop = localStorage.getItem('bus_stop') as any;
+    if (!busStop) return;
+    this.showBusesOption = true;
   }
 
   showBusesOption = false;

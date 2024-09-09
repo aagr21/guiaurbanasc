@@ -18,7 +18,7 @@
         <label for="busStops" class="ml-1 unselectable">Paradas de Micros</label>
       </div>
       <div class="m-0 h-[22px]">
-        <input id="buses" type="checkbox" (click)="selectBus($event)" />
+        <input id="buses" type="checkbox" (click)="selectBus($event)" [checked]="showBusesOption" />
         <label for="buses" class="ml-1 unselectable">Micros</label>
       </div>
       <div class="m-0 h-[22px]">

@@ -1,4 +1,4 @@
-<mat-tab-group preserveContent class="h-full overflow-y-hidden">
+<mat-tab-group preserveContent class="h-full overflow-y-hidden" [selectedIndex]="selectedTab">
   <mat-tab>
     <ng-template mat-tab-label>
       Micros
@@ -10,16 +10,10 @@
       (lineRouteSelectedChange)="onLineRouteSelected($event)"
     />
   </mat-tab>
-  <!-- TODO: Completar  -->
-  <!-- <mat-tab>
-    <ng-template mat-tab-label>
-      Viaje <mat-icon fontSet="material-symbols-outlined">route</mat-icon>
-    </ng-template>
-  </mat-tab>
   <mat-tab>
     <ng-template mat-tab-label>
-      Micros cerca
-      <mat-icon fontSet="material-symbols-outlined">radar</mat-icon>
+      QR Parada <mat-icon fontSet="material-symbols-outlined">qr_code_2</mat-icon>
     </ng-template>
-  </mat-tab> -->
+    <app-qr-buses-stop />
+  </mat-tab>
 </mat-tab-group>

@@ -1,8 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { MapComponent } from '@home/map/map.component';
 import { AllData } from '@models/interfaces';
 import { MapService } from '@services/map.service';
-import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-home',
@@ -16,10 +17,26 @@ export class HomeComponent implements OnInit {
 
   mapsService = inject(MapService);
   allData!: AllData;
+  router = inject(ActivatedRoute);
+  spinner = inject(NgxSpinnerService);
 
-  constructor(
-    private readonly spinner: NgxSpinnerService
-  ) {}
+  constructor() {
+    const stopLat = this.router.snapshot.queryParamMap.get('stop_lat');
+    const stopLon = this.router.snapshot.queryParamMap.get('stop_lon');
+    if (stopLat && stopLon) {
+      localStorage.setItem(
+        'bus_stop',
+        JSON.stringify({
+          stop_lat: +stopLat,
+          stop_lon: +stopLon,
+        })
+      );
+    } else {
+      if (localStorage.getItem('bus_stop')) {
+        localStorage.removeItem('bus_stop');
+      }
+    }
+  }
 
   ngOnInit(): void {
     this.isLoading = true;
