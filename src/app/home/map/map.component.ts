@@ -365,7 +365,7 @@ export class MapComponent implements OnInit {
         }),
       },
     };
-    this.mapService.onUpdate().subscribe({
+    this.mapService.onParkingsUpdate().subscribe({
       next: (response) => {
         this.allData.parkings = response;
         this.optionsMap['parkings'].layer = geoJSON(

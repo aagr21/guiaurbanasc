@@ -14,12 +14,12 @@ export class MapService extends Socket {
     super({
       url: `${environment.apiBaseUrl}/parkings`,
     });
-    this.onUpdate();
+    this.onParkingsUpdate();
   }
 
   private http = inject(HttpClient);
 
-  onUpdate() {
+  onParkingsUpdate() {
     return this.fromEvent<Parking[]>('update');
   }
 
