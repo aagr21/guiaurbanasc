@@ -1,12 +1,12 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { TitleCasePipe } from '@angular/common';
-import { Component, inject, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnDestroy, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormField } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
-import { LineName } from '@models/interfaces';
+import { LineName, LineRoute } from '@models/interfaces';
 import { FindLineRoute } from '@models/interfaces/find-line-route';
 import { MapService } from '@services/map.service';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
@@ -31,6 +31,9 @@ export class QrBusesStopComponent implements OnDestroy {
   mapService = inject(MapService);
   linesNames!: LineName[];
   result!: LineName[];
+  @Input() lineRouteSelected!: LineRoute;
+  @Output() lineRouteSelectedChange: EventEmitter<LineRoute> =
+    new EventEmitter<LineRoute>();
   searchText: string = '';
   isSmallScreen = false;
   breakpointObserver = inject(BreakpointObserver);
@@ -41,6 +44,8 @@ export class QrBusesStopComponent implements OnDestroy {
   constructor() {
     const busStop = JSON.parse(localStorage.getItem('bus_stop') as any);
     if (!busStop) return;
+    this.isLoading = true;
+    this.spinner.show();
     this.mapService
       .findLineNamesNearStop({
         stopLat: busStop.stopLat,
@@ -50,6 +55,12 @@ export class QrBusesStopComponent implements OnDestroy {
         next: (response) => {
           this.linesNames = response;
           this.result = response;
+          this.isLoading = false;
+          this.spinner.hide();
+        },
+        error: (_) => {
+          this.isLoading = false;
+          this.spinner.hide();
         },
       });
     this.subscription = this.breakpointObserver
@@ -73,8 +84,8 @@ export class QrBusesStopComponent implements OnDestroy {
     this.spinner.show();
     this.mapService.findLineRoute(findLineRoute).subscribe({
       next: (response) => {
-        // this.lineRouteSelected = response;
-        // this.lineRouteSelectedChange.emit(this.lineRouteSelected);
+        this.lineRouteSelected = response;
+        this.lineRouteSelectedChange.emit(this.lineRouteSelected);
         this.spinner.hide();
         this.isLoading = false;
       },
