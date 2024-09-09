@@ -44,6 +44,11 @@
           child) { @if (child.show) {
           <div [leafletLayer]="child.layer!"></div>
           } }
+          @if(showBusesOption && busStop) {
+            <div
+            [leafletLayer]="makeBusStopMarker(busStop)"
+          ></div>
+          }
         </div>
       </div>
 

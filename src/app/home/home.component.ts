@@ -27,8 +27,8 @@ export class HomeComponent implements OnInit {
       localStorage.setItem(
         'bus_stop',
         JSON.stringify({
-          stop_lat: +stopLat,
-          stop_lon: +stopLon,
+          stopLat: +stopLat,
+          stopLon: +stopLon,
         })
       );
     } else {

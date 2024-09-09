@@ -43,8 +43,8 @@ export class QrBusesStopComponent implements OnDestroy {
     if (!busStop) return;
     this.mapService
       .findLineNamesNearStop({
-        stopLat: busStop.stop_lat,
-        stopLon: busStop.stop_lon,
+        stopLat: busStop.stopLat,
+        stopLon: busStop.stopLon,
       })
       .subscribe({
         next: (response) => {

@@ -10,6 +10,7 @@ import {
   marker,
   icon,
   polyline,
+  Marker,
 } from 'leaflet';
 import { LeafletModule } from '@bluehalo/ngx-leaflet';
 import { LeafletPanelLayersComponent } from './controls';
@@ -56,6 +57,7 @@ export class MapComponent implements OnInit {
       subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
     }
   );
+  busStop!: BusStop;
 
   options: MapOptions = {
     zoom: 13,
@@ -431,8 +433,9 @@ export class MapComponent implements OnInit {
         );
       },
     });
-    const busStop: BusStop = localStorage.getItem('bus_stop') as any;
-    if (!busStop) return;
+    const busStopString = localStorage.getItem('bus_stop') as any;
+    if (!busStopString) return;
+    this.busStop = JSON.parse(busStopString);
     this.showBusesOption = true;
   }
 
@@ -464,5 +467,26 @@ export class MapComponent implements OnInit {
 
   onMapReady(map: Map) {
     this.map = map;
+    if (this.busStop) {
+      this.map.setView(
+        {
+          lat: this.busStop.stopLat,
+          lng: this.busStop.stopLon,
+        },
+        20
+      );
+    }
+  }
+
+  makeBusStopMarker(busStop: BusStop): Marker {
+    console.log(busStop);
+    const latlong = latLng(busStop.stopLat, busStop.stopLon);
+    console.log(latlong);
+    return marker(latLng(busStop.stopLat, busStop.stopLon, 1), {
+      icon: icon({
+        iconSize: [27, 27],
+        iconUrl: '/assets/images/bus-stop.svg',
+      }),
+    });
   }
 }
