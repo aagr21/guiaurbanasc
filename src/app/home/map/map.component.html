@@ -7,7 +7,7 @@
     [opened]="showBusesOption"
   >
     <app-sidebar
-      [selectedTab]="showBusesOption ? 1 : undefined"
+      [selectedTab]="showBusesOption && busStop ? 1 : undefined"
       [linesNames]="allData.linesNames"
       [lineRouteSelected]="lineRouteSelected"
       (lineRouteSelectedChange)="onLineRouteSelected($event)"
