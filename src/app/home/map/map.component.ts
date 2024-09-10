@@ -465,6 +465,8 @@ export class MapComponent implements OnInit {
     return 'height: 100%; width: 100%';
   }
 
+  marker!: Marker;
+
   onMapReady(map: Map) {
     this.map = map;
     if (this.busStop) {
@@ -479,10 +481,7 @@ export class MapComponent implements OnInit {
   }
 
   makeBusStopMarker(busStop: BusStop): Marker {
-    console.log(busStop);
-    const latlong = latLng(busStop.stopLat, busStop.stopLon);
-    console.log(latlong);
-    return marker(latLng(busStop.stopLat, busStop.stopLon, 1), {
+    return marker(latLng(busStop.stopLat, busStop.stopLon), {
       icon: icon({
         iconSize: [27, 27],
         iconUrl: '/assets/images/bus-stop.svg',
